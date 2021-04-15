@@ -66,7 +66,10 @@ module Ethon
       def complete
         headers unless @response_headers.empty?
         if defined?(@on_complete) and not @on_complete.nil?
-          @on_complete.each{ |callback| callback.call(self) }
+          @on_complete.each{ |callback|
+            Ethon.logger.debug "ETHON: #{object_id} - on_complete #{callback.inspect}"
+            callback.call(self)
+          }
         end
       end
 
