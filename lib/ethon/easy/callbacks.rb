@@ -40,6 +40,7 @@ module Ethon
           headers
           result = body(chunk = stream.read_string(size * num))
           @response_body << chunk if result == :unyielded
+          Ethon.logger.debug { "ETHON: writefunction - #{result}" }
           result != :abort ? size * num : -1
         end
       end

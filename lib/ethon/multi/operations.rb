@@ -147,6 +147,7 @@ module Ethon
           next if msg[:code] != :done
           easy = easy_handles.find{ |e| e.handle == msg[:easy_handle] }
           easy.return_code = msg[:data][:code]
+          Ethon.logger.debug { "ETHON: Curl.multi_info_read - #{msgs_left.read_int} - #{msg.inspect}" }
           Ethon.logger.debug { "ETHON:         performed #{easy.log_inspect}" }
           delete(easy)
           easy.complete
@@ -174,6 +175,7 @@ module Ethon
       def trigger(running_count_pointer)
         code = Curl.multi_perform(handle, running_count_pointer)
         @running_count = running_count_pointer.read_int
+        Ethon.logger.debug { "ETHON: Curl.multi_perform - #{@running_count} - #{code.inspect}" }
         code
       end
 
